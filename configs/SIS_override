@@ -1,0 +1,8 @@
+! Blank file in which we can put "overrides" for parameters
+!# override NIGLOBAL = 88
+!# override NJGLOBAL = 80
+!#override NIBLOCK = 1
+!#override NJBLOCK = 1
+#override NIGLOBAL = 430
+#override NJGLOBAL = 396
+#override MAXTRUNC = 10000
