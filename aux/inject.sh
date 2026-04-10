@@ -53,29 +53,46 @@ days_to_year_end() {
     echo $(( total - doy + 1 ))
 }
 
-months_to_next_half() {
+
+months_to_year_end() {
     local m=$1
-    if (( m <= 6 )); then echo $(( 7 - m ))
-    else echo $(( 13 - m ))
+    echo $(( 13 - m ))
+}
+
+#get_sim_date() {
+#    local total=$(grep -v '^[[:space:]]*$' $ctrldir/jobscompleted | tail -1 | awk '{print $2}')
+#    local sy=$(awk '{print $1}' $ctrldir/run_start_date)
+#    local sm=$(awk '{print $2}' $ctrldir/run_start_date)
+#    local sd=$(awk '{print $3}' $ctrldir/run_start_date)
+#    if [[ $dt_unit == "months" ]]; then
+#        advance_months $sy $sm ${total:-0}
+#    else
+#        advance_date $sy $sm $sd ${total:-0}
+#    fi
+#}
+
+
+get_sim_date() {
+    if [[ ! -s $ctrldir/jobscompleted ]]; then
+        cat $ctrldir/run_start_date
+    else
+        grep -v '^[[:space:]]*$' $ctrldir/jobscompleted | tail -1 | awk '{print $5, $6, $7}'
     fi
 }
 
-get_sim_date() {
-    local total=$(grep -v '^[[:space:]]*$' $ctrldir/jobscompleted | tail -1 | awk '{print $2}')
-    local sy=$(awk '{print $1}' $ctrldir/run_start_date)
-    local sm=$(awk '{print $2}' $ctrldir/run_start_date)
-    local sd=$(awk '{print $3}' $ctrldir/run_start_date)
+advance_sim_date() {
+    local y=$1 m=$2 d=$3
     if [[ $dt_unit == "months" ]]; then
-        advance_months $sy $sm ${total:-0}
+        advance_months $y $m $seg_units
     else
-        advance_date $sy $sm $sd ${total:-0}
+        advance_date $y $m $d $seg_units
     fi
 }
 
 compute_segment() {
     local y=$1 m=$2 d=$3
     if [[ $dt_unit == "months" ]]; then
-        local remaining=$(months_to_next_half $m)
+        local remaining=$(months_to_year_end $m)
         seg_units=$(( remaining < dt ? remaining : dt ))
         run_length=$seg_units
     else
@@ -90,7 +107,7 @@ compute_segment() {
 set_run_mode() {
     local job=$1
     if [[ $job == 1 ]]; then
-        sed -i "s/input_filename = 'r'/input_filename = 'n'/g" $ctrldir/input.nml
+        sed -i "s/input_filename = 'r'/input_filename = 'r'/g" $ctrldir/input.nml
     else
         sed -i "s/input_filename = 'n'/input_filename = 'r'/g" $ctrldir/input.nml
     fi
@@ -118,7 +135,7 @@ reset_run_length() {
 }
 
 prepare_nml() {
-    cp $ctrldir/templates/input.nml.template $ctrldir/input.nml
+    cp $ctrldir/input.nml.template $ctrldir/input.nml
 }
 
 update_current_date() {
@@ -134,21 +151,107 @@ prepare_input_files() {
 }
 
 # ─── Standalone test mode ─────────────────────────────────────────────────────
+#if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+#    ctrldir=$(pwd)
+#    dt=${dt:-2}
+#    dt_unit=${dt_unit:-"days"}
+#    y=${1:?usage: inject.sh <year> <month> <day>}
+#    m=${2:?}
+#    d=${3:?}
+#    compute_segment $y $m $d
+#    echo "Sim date:   $y-$m-$d"
+#    echo "Segment:    $seg_units $dt_unit ($run_length to inject)"
+#    echo "--- input.nml before ---"
+#    grep -E "months|days|current_date|input_filename" $ctrldir/input.nml
+#    prepare_nml
+#    set_run_mode
+#    update_current_date $y $m $d
+#    inject_run_length $run_length
+#    echo "--- input.nml after ---"
+#    grep -E "months|days|current_date|input_filename" $ctrldir/input.nml
+#fi
+
+# ─── Standalone test mode ─────────────────────────────────────────────────────
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     ctrldir=$(pwd)
-    dt=${dt:-6}
-    dt_unit=${dt_unit:-"months"}
     y=${1:?usage: inject.sh <year> <month> <day>}
     m=${2:?}
     d=${3:?}
-    compute_segment $y $m $d
-    echo "Sim date:   $y-$m-$d"
-    echo "Segment:    $seg_units $dt_unit ($run_length to inject)"
-    echo "--- input.nml before ---"
-    grep -E "months|days|current_date|input_filename" $ctrldir/input.nml
-    prepare_nml
-    update_current_date $y $m $d
-    inject_run_length $run_length
-    echo "--- input.nml after ---"
-    grep -E "months|days|current_date|input_filename" $ctrldir/input.nml
+
+    echo "$y $m $d" > $ctrldir/run_start_date
+    rm -f $ctrldir/jobscompleted && touch $ctrldir/jobscompleted
+
+    echo "=== Phase 1: months mode (dt=2) ==="
+    dt_unit="months"; dt=2
+    for job in 1 2 3; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== Phase 2: switch to days mode (dt=13) ==="
+    dt_unit="days"; dt=13
+    for job in 4 5 6; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== Phase 3: end-of-year cap (months, dt=6) ==="
+    dt_unit="months"; dt=6
+    echo "6 $thisyear 7 1 $thisyear 7 1" >> $ctrldir/jobscompleted
+    for job in 7 8 9; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== Phase 4: end-of-year cap (days, dt=13) ==="
+    dt_unit="days"; dt=13
+    echo "9 $thisyear 12 25 $thisyear 12 25" >> $ctrldir/jobscompleted
+    for job in 10 11; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== Phase 5: leap year (days, dt=13, start Feb 20 1996) ==="
+    dt_unit="days"; dt=13
+    echo "11 1996 2 20 1996 2 20" >> $ctrldir/jobscompleted
+    for job in 12 13; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== Phase 6: month boundary (days, dt=13, start Jan 31 1996) ==="
+    dt_unit="days"; dt=13
+    echo "13 1996 1 31 1996 1 31" >> $ctrldir/jobscompleted
+    for job in 14 15; do
+        read thisyear thismonth thisday <<< $(get_sim_date)
+        compute_segment $thisyear $thismonth $thisday
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "Job $job | start: $thisyear-$thismonth-$thisday | seg: $seg_units $dt_unit | end: $nextyear-$nextmonth-$nextday"
+        echo "$job $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+    done
+
+    echo ""
+    echo "=== jobscompleted ==="
+    cat $ctrldir/jobscompleted
 fi
+

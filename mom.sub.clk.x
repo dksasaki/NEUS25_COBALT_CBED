@@ -9,10 +9,10 @@
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 njobs=30
-dt=6
-dt_unit="months"   # "days" or "months"
-ctrldir=$(pwd)
-subscript="mom.sub.zen2.x"
+dt=12
+dt_unit="days"   # "days" or "months"
+ctrldir=${PWD}
+subscript="mom.sub.clk.x"
 subscript_args="--ntasks=$SLURM_NTASKS"
 logname="NWA25_NEUS"
 
@@ -101,10 +101,12 @@ status=$(check_run_status)
 case $status in
     success)
         archive_outputs $thisjob
-        prev=$(grep -v '^[[:space:]]*$' $ctrldir/jobscompleted | tail -1 | awk '{print $2}')
-        total=$(( ${prev:-0} + seg_units ))
-        echo "$thisjob $total" >> $ctrldir/jobscompleted
-        if (( thisjob < njobs )); then
+        
+        read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
+        echo "$thisjob $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
+
+
+	if (( thisjob < njobs )); then
             resubmit
         else
             echo "This is the last job."
