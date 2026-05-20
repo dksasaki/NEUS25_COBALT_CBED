@@ -31,6 +31,7 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cobalt_z","psm",       "psm",      "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","silg",      "silg",     "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","simd",      "simd",     "cobalt_tracers%4yr%2mo","all","mean","none",2
+"generic_cobalt_z","chl",    "chl",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Lg",    "chl_Lg",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Md",    "chl_Md",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Sm",    "chl_Sm",   "cobalt_tracers%4yr%2mo","all","mean","none",2
@@ -45,6 +46,7 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cobalt_z","talk",      "talk",     "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","si",        "si",       "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","co3",       "co3",      "cobalt_tracers%4yr%2mo","all","mean","none",2
+"generic_cobalt_z","no3",        "no3",       "cobalt_tracers%4yr%2mo","all","mean","none",2
 #===================================================================================
 # PRODUCTION TERMS (mol kg-1 s-1)
 #===================================================================================
