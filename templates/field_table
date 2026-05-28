@@ -19,6 +19,12 @@
 ###.................................................
 "namelists","ocean_mod","generic_COBALT"
 enforce_src_info = f
+ndet_fast_obc_has = f
+pdet_fast_obc_has = f
+pcmlim_aclm_ndi_requires_src_info = f
+pcmlim_aclm_nlg_requires_src_info = f
+pcmlim_aclm_nmd_requires_src_info = f
+pcmlim_aclm_nsm_requires_src_info = f
 alk_obc_src_file_name = bgc_esper.nc
 alk_obc_lfac_in = 0.03
 alk_obc_lfac_out = 1.0
@@ -160,6 +166,12 @@ nmd_obc_lfac_out = 1.0
 plg_obc_src_file_name = bgc_cobalt.nc
 plg_obc_lfac_in = 0.03
 plg_obc_lfac_out = 1.0
+ndet_fast_obc_src_file_name = bgc_zero.nc
+ndet_fast_obc_lfac_in = 0.03
+ndet_fast_obc_lfac_out = 1.0
+pdet_fast_obc_src_file_name = bgc_zero.nc
+pdet_fast_obc_lfac_in = 0.03
+pdet_fast_obc_lfac_out = 1.0
 ki_hp  = 1.25e-6
 ki_smz = 1.25e-6 
 ki_mdz = 1.25e-6 

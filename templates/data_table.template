@@ -73,4 +73,12 @@
 "OCN", "wet_dep_nh4_flux_ice_ocn",  "wetnh4",       "./INPUT/esm4_wetnh4_climo_1993-2014.nc",                                "bilinear",     -1.0
 "OCN", "dry_dep_nh4_flux_ice_ocn",  "drynh4",       "./INPUT/esm4_drynh4_climo_1993-2014.nc",                                "bilinear",     -1.0
 "OCN", "por",                  "porosity",       "./INPUT/porosity_final.nc",                                "bilinear",     1.0
+"OCN", "e_juptake_no3", "", "", "none", 1.0e-10
+"OCN", "e_juptake_po4", "", "", "none", 1.0e-11
+"OCN", "e_juptake_fed", "", "", "none", 1.0e-14
+"OCN", "mask_e_juptake", "mask_e_juptake", "./INPUT/mask_e_juptake.nc", "none", 1.0
+"OCN", "ndet_addition", "", "", "none", 1.0e-2
+"OCN", "pdet_addition", "", "", "none", 1.0e-5
+"OCN", "fedet_addition", "", "", "none", 1.0e-9
+"OCN", "mask_addition_t", "mask_addition_t", "./INPUT/mask_addition_t_b.nc", "none", 1.0
 

@@ -6,5 +6,9 @@
 **debugging
 **short
 **status
+**_stats
+**available_diags
+logs/*
 jobscompleted
 run_start_date
+
