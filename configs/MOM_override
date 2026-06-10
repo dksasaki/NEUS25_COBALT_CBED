@@ -101,7 +101,7 @@
 DT_OBC_SEG_UPDATE_OBGC = 3600
 #override CHL_FROM_FILE = False
 #override DO_GEOTHERMAL = True
-#override GENERIC_TRACER_IC_FILE = "bgc_woa_esper_ics_1993_2023-04.nc"
+#override GENERIC_TRACER_IC_FILE = "bgc_woa_esper_ics_1993_2023-04_update.nc"
 
 #override EXP_OPACITY_SCHEME = "MANIZZA_05"   ! default = "MANIZZA_05"
                                 ! This character string specifies how chlorophyll concentrations are translated
