@@ -19,6 +19,12 @@
 ###.................................................
 "namelists","ocean_mod","generic_COBALT"
 enforce_src_info = f
+ndet_fast_obc_has = f
+pdet_fast_obc_has = f
+pcmlim_aclm_ndi_requires_src_info = f
+pcmlim_aclm_nlg_requires_src_info = f
+pcmlim_aclm_nmd_requires_src_info = f
+pcmlim_aclm_nsm_requires_src_info = f
 alk_obc_src_file_name = bgc_TA_<YEAR>.nc
 alk_obc_lfac_in = 0.03
 alk_obc_lfac_out = 1.0
