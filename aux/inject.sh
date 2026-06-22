@@ -135,7 +135,7 @@ reset_run_length() {
 }
 
 prepare_nml() {
-    cp $ctrldir/input.nml.template $ctrldir/input.nml
+    cp $ctrldir/templates/input.nml.template $ctrldir/input.nml
 }
 
 update_current_date() {
@@ -146,6 +146,7 @@ update_current_date() {
 prepare_input_files() {
     local year=$1
     sed "s/<YEAR>/$year/g" data_table.template           > data_table
+    sed "s/<YEAR>/$year/g" field_table.template           > field_table
     sed "s/<YEAR>/$year/g" configs/MOM_override.template > configs/MOM_override
     cd configs && ln -sf MOM_layout.$SLURM_NTASKS MOM_layout && cd ..
 }
