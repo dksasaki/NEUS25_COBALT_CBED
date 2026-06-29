@@ -8,3 +8,5 @@
 **status
 jobscompleted
 run_start_date
+INPUT/*
+!INPUT/.empty

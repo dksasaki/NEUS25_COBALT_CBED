@@ -177,6 +177,3 @@ DT_OBC_SEG_UPDATE_OBGC = 3600
 #override DIABATIC_FIRST = False
 #override REMAP_AUXILIARY_VARS = True
 #override DYNAMIC_VISCOUS_ML = True
-#override PHA_MLD_CALC = True
-#override PHA_MLD_USE_DELTA_RHO = True
-#override RESTART_CHECKSUMS_REQUIRED = False

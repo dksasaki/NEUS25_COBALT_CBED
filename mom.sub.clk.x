@@ -8,9 +8,9 @@
 #SBATCH --constrain=ib,cascadelake
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=30
-dt=12
-dt_unit="days"   # "days" or "months"
+njobs=12
+dt=1
+dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
 subscript="mom.sub.clk.x"
 subscript_args="--ntasks=$SLURM_NTASKS"

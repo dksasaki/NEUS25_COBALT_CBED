@@ -1,7 +1,7 @@
  &MOM_input_nml
          output_directory = './',
          input_filename = 'n'
-         restart_input_dir = 'INPUT/',
+         restart_input_dir = 'RESTART_INPUT/',
          restart_output_dir = 'RESTART/',
          parameter_filename = 'configs/MOM_input',
                               'configs/MOM_override',
@@ -11,7 +11,7 @@
  &SIS_input_nml
         output_directory = './',
         input_filename = 'n'
-        restart_input_dir = 'INPUT/',
+        restart_input_dir = 'RESTART_INPUT/',
         restart_output_dir = 'RESTART/',
         parameter_filename = 'configs/SIS_input',
                              'configs/SIS_override',
@@ -32,8 +32,8 @@
             days = 0,
             hours  = 0,
             minutes= 0,
-            current_date = 1993,1,1,0,0,0,
-            force_date_from_namelist = .true.,
+            current_date = 2005,1,1,0,0,0,
+            force_date_from_namelist = .false.,
             calendar = 'julian',
             dt_cpld = 1200,
             dt_atmos = 1200,
@@ -64,7 +64,7 @@
             threading_read='multi'
             max_files_r = 200
             max_files_w = 200
-  /         checksum_required = .false.
+            checksum_required = .false.
 /
 
  &fms_nml
@@ -79,7 +79,6 @@
         debug = .false.
         imbalance_tolerance=1.0e-3
         as_param_cobalt='W92'
-        do_cbed=.true.
 /
 
  &generic_abiotic_nml

@@ -72,5 +72,4 @@
 "OCN", "dry_dep_no3_flux_ice_ocn",  "drynoy",       "./INPUT/esm4_drynoy_climo_1993-2014.nc",                                "bilinear",     -1.0
 "OCN", "wet_dep_nh4_flux_ice_ocn",  "wetnh4",       "./INPUT/esm4_wetnh4_climo_1993-2014.nc",                                "bilinear",     -1.0
 "OCN", "dry_dep_nh4_flux_ice_ocn",  "drynh4",       "./INPUT/esm4_drynh4_climo_1993-2014.nc",                                "bilinear",     -1.0
-"OCN", "por",                  "porosity",       "./INPUT/porosity_final.nc",                                "bilinear",     1.0
 
