@@ -1,7 +1,7 @@
  &MOM_input_nml
          output_directory = './',
          input_filename = 'n'
-         restart_input_dir = 'INPUT/',
+         restart_input_dir = 'RESTART_INPUT/',
          restart_output_dir = 'RESTART/',
          parameter_filename = 'configs/MOM_input',
                               'configs/MOM_override',
@@ -11,7 +11,7 @@
  &SIS_input_nml
         output_directory = './',
         input_filename = 'n'
-        restart_input_dir = 'INPUT/',
+        restart_input_dir = 'RESTART_INPUT/',
         restart_output_dir = 'RESTART/',
         parameter_filename = 'configs/SIS_input',
                              'configs/SIS_override',
@@ -32,7 +32,7 @@
             days = 0,
             hours  = 0,
             minutes= 0,
-            current_date = 1993,1,1,0,0,0,
+            current_date = 2018,1,1,0,0,0,
             force_date_from_namelist = .true.,
             calendar = 'julian',
             dt_cpld = 1200,

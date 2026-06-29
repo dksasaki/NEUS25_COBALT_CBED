@@ -2,15 +2,15 @@
 #SBATCH -J NWA25_NEUS_bp
 #SBATCH --error=NWA25_NEUS.err
 #SBATCH --output=NWA25_NEUS.out
-#SBATCH --time=4-00:00:00
+#SBATCH --time=1-00:00:00
 #SBATCH --partition=long
 #SBATCH --mem=32G
 #SBATCH --constrain=ib,cascadelake
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=30
-dt=12
-dt_unit="days"   # "days" or "months"
+njobs=4
+dt=3
+dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
 subscript="mom.sub.clk.x"
 subscript_args="--ntasks=$SLURM_NTASKS"
@@ -51,7 +51,7 @@ archive_outputs() {
     local job=$1
     mv *.nc ./outputs_raw/.
     tar -cvf restarts.$job RESTART/* && mv restarts.$job ./restarts_raw
-    mv RESTART/* INPUT/.
+    mv RESTART/* RESTART_INPUT/.
     tar -cvf logs.tar.$job \
         MOM_parameter_doc.* SIS_parameter_doc.* \
         ${logname}.err ${logname}.out \
