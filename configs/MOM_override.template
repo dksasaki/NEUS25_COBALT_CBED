@@ -101,7 +101,7 @@
 DT_OBC_SEG_UPDATE_OBGC = 3600
 #override CHL_FROM_FILE = False
 #override DO_GEOTHERMAL = True
-#override GENERIC_TRACER_IC_FILE = "bgc_woa_esper_ics_1993_2023-04_update.nc"
+#override GENERIC_TRACER_IC_FILE = "bgc_woa_esper_ics_1993_2023-04.nc"
 
 #override EXP_OPACITY_SCHEME = "MANIZZA_05"   ! default = "MANIZZA_05"
                                 ! This character string specifies how chlorophyll concentrations are translated
@@ -115,7 +115,7 @@ DT_OBC_SEG_UPDATE_OBGC = 3600
 #override CHL_FROM_FILE=False
 
 #override DT=300
-#override DT_THERM=1200
+#override DT_THERM=1800
 
 #override LZ_RESCALE = 0.2
 #override MASKING_DEPTH = 0.3
@@ -177,3 +177,4 @@ DT_OBC_SEG_UPDATE_OBGC = 3600
 #override DIABATIC_FIRST = False
 #override REMAP_AUXILIARY_VARS = True
 #override DYNAMIC_VISCOUS_ML = True
+#override OBC_TIDE_REF_DATE=2005,1,1
