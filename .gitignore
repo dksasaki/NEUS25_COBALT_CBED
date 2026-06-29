@@ -10,3 +10,4 @@ jobscompleted
 run_start_date
 INPUT/*
 !INPUT/.empty
+!INPUT/files_list
