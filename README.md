@@ -86,6 +86,17 @@ update input.nml, notice that this is where you can turn on CBED
 ```
 
 
+In order to configure the number of processors, you need to create a `mask_table`. See `check_mask` (below) if the appropriate `mask_table` is not available in INPUT. `configs/MOM_layout` also contains information on `mask_table`.
+
+To run the model:
+
+
+```bash
+# 290 is the number of processors in this case
+sbatch --ntasks=290 mom.sub.clk.x
+```
+
+
 ## Questions you should be able to answer in order to understand the basic MOM6-COBALT structure
 what is the objective of the specific namelist files below?
 
