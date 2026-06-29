@@ -56,7 +56,7 @@ cd $your_experiment_dir
 
 git clone https://github.com/dksasaki/NEUS25_COBALT_CBED.git $your_experiment_name
 
-# checkout specific branch (the branch commit should be 66e1389 or more recent)
+# checkout specific branch (the branch commit should be f810e69  or more recent)
 cd $your_experiment_name
 git checkout version_CBEDs2_variable_obc_bgc
 
