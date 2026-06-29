@@ -18,6 +18,10 @@ logname="NWA25_NEUS"
 
 source $ctrldir/aux/inject.sh
 
+
+y0=2005
+m0=1
+d0=1
 # ─── Functions ────────────────────────────────────────────────────────────────
 
 setup_dirs() {
@@ -75,10 +79,9 @@ thisjob=$(get_job_number)
 echo "Starting job #$thisjob"
 
 if [[ $thisjob == 1 ]]; then
-    line=$(grep "current_date" $ctrldir/input.nml | sed "s/,/ /g")
-    sy=$(echo $line | awk '{print $3}')
-    sm=$(echo $line | awk '{print $4}')
-    sd=$(echo $line | awk '{print $5}')
+    sy=$y0
+    sm=$m0
+    sd=$d0
     echo "$sy $sm $sd" > $ctrldir/run_start_date
 fi
 
