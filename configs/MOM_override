@@ -42,14 +42,14 @@
                                 ! Apply sponges in u and v, in addition to tracers.
 
 #override SPONGE_DAMPING_FILE = "damping_tgb_t.nc" !
-#override SPONGE_STATE_FILE = "nudging_monthly_1993.nc" ! default = "damping_full_tgb_t.nc"
+#override SPONGE_STATE_FILE = "nudging_monthly_2005.nc" ! default = "damping_full_tgb_t.nc"
 #override SPONGE_PTEMP_VAR = "thetao"      ! default = "PTEMP"
 #override SPONGE_SALT_VAR = "so"        ! default = "SALT"
 #override SPONGE_IDAMP_VAR = "Idamp"      ! default = "Idamp"
 #override INTERPOLATE_SPONGE_TIME_SPACE = True
 #override SPONGE_DATA_ONGRID=True
 
-#override SPONGE_UV_STATE_FILE = "nudging_monthly_1993.nc"
+#override SPONGE_UV_STATE_FILE = "nudging_monthly_2005.nc"
 #override SPONGE_UV_DAMPING_FILE = "damping_tgb_t.nc"
 #override SPONGE_U_VAR = "uo"              ! default = "UVEL"
                                 ! The name of the zonal velocity variable in SPONGE_UV_STATE_FILE.
@@ -89,8 +89,8 @@
 #override OBC_COMPUTED_STRAIN = False     !   [Boolean] default = False
 #override BEGW = 0.5
 
-#override OBC_SEGMENT_001_DATA = "U=file:uv_001_1993.nc(u),V=file:uv_001_1993.nc(v),SSH=file:zos_001_1993.nc(zos),TEMP=file:thetao_001_1993.nc(thetao),SALT=file:so_001_1993.nc(so),Uamp=file:tu_001.nc(uamp),Uphase=file:tu_001.nc(uphase),Vamp=file:tu_001.nc(vamp),Vphase=file:tu_001.nc(vphase),SSHamp=file:tz_001.nc(zamp),SSHphase=file:tz_001.nc(zphase)"
-#override OBC_SEGMENT_002_DATA = "U=file:uv_002_1993.nc(u),V=file:uv_002_1993.nc(v),SSH=file:zos_002_1993.nc(zos),TEMP=file:thetao_002_1993.nc(thetao),SALT=file:so_002_1993.nc(so),Uamp=file:tu_002.nc(uamp),Uphase=file:tu_002.nc(uphase),Vamp=file:tu_002.nc(vamp),Vphase=file:tu_002.nc(vphase),SSHamp=file:tz_002.nc(zamp),SSHphase=file:tz_002.nc(zphase)"
+#override OBC_SEGMENT_001_DATA = "U=file:uv_001_2005.nc(u),V=file:uv_001_2005.nc(v),SSH=file:zos_001_2005.nc(zos),TEMP=file:thetao_001_2005.nc(thetao),SALT=file:so_001_2005.nc(so),Uamp=file:tu_001.nc(uamp),Uphase=file:tu_001.nc(uphase),Vamp=file:tu_001.nc(vamp),Vphase=file:tu_001.nc(vphase),SSHamp=file:tz_001.nc(zamp),SSHphase=file:tz_001.nc(zphase)"
+#override OBC_SEGMENT_002_DATA = "U=file:uv_002_2005.nc(u),V=file:uv_002_2005.nc(v),SSH=file:zos_002_2005.nc(zos),TEMP=file:thetao_002_2005.nc(thetao),SALT=file:so_002_2005.nc(so),Uamp=file:tu_002.nc(uamp),Uphase=file:tu_002.nc(uphase),Vamp=file:tu_002.nc(vamp),Vphase=file:tu_002.nc(vphase),SSHamp=file:tz_002.nc(zamp),SSHphase=file:tz_002.nc(zphase)"
 
 
 !# 2024/04/13
@@ -177,6 +177,3 @@ DT_OBC_SEG_UPDATE_OBGC = 3600
 #override DIABATIC_FIRST = False
 #override REMAP_AUXILIARY_VARS = True
 #override DYNAMIC_VISCOUS_ML = True
-#override PHA_MLD_CALC = True
-#override PHA_MLD_USE_DELTA_RHO = True
-#override RESTART_CHECKSUMS_REQUIRED = False

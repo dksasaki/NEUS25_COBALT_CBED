@@ -135,7 +135,7 @@ reset_run_length() {
 }
 
 prepare_nml() {
-    cp $ctrldir/input.nml.template $ctrldir/input.nml
+    cp $ctrldir/templates/input.nml.template $ctrldir/input.nml
 }
 
 update_current_date() {
