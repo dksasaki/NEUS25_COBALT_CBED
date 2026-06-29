@@ -1,3 +1,4 @@
+
 ## Compiling MOM6-COBALT-NEUS25+CBED
 
 ```bash
@@ -69,3 +70,116 @@ ln -s /home/d.sasaki/schultz/d.sasaki/experiments/inputs_ref/20260622_consolidat
 ln -s ${your_compilation_dir}/${mom6_compilation}/builds/build/explorer-intel/ocean_ice/repro/MOM6SIS2 mom6
 # change the mom.sub.clk.x to use partition sharing and submit a run. Adjust dt. also set up y0 m0 and d0 to match your initial year, month and day (this is not used for restart)
 ```
+
+
+update input.nml, notice that this is where you can turn on CBED
+
+```
+ &generic_COBALT_nml
+        co2_calc = 'mocsy'
+        debug = .false.
+        imbalance_tolerance=1.0e-3
+        as_param_cobalt='W92'
+        do_external_source=.false.
+        do_CBED=.true.
+/
+```
+
+
+## Questions you should be able to answer in order to understand the basic MOM6-COBALT structure
+what is the objective of the specific namelist files below?
+
+- MOM_input
+- MOM_override
+- MOM_layout
+- COBALT_input
+- SIS_input
+- SIS_override
+- SIS_layout
+
+look at input.nml
+
+- how do you configure the model to start from initial conditions or restart
+- where do configure the paths to the specific namelist files?
+
+What are the objectives of?
+
+- data_table
+- field_table
+- diagnostic_table
+
+
+
+----
+
+
+
+installing check_mask
+
+
+```bash
+# in your local machine!
+sudo apt install nco
+
+# in macos
+# brew install nco 
+
+
+install_dir==/path/to/a/install/dir/of/your/choice
+
+git clone https://github.com/NOAA-GFDL/FRE-NCtools
+mkdir install
+autoreconf -i
+mkdir build && cd build
+
+# prefix will install FRE-NCtools in a directory of your choice (instead of doing it at th root)
+../configure --prefix=${install_dir}
+make
+make install
+
+# in $install_dir there is a bin/check-mask - this is the executable you'll use to create your masks
+
+```
+
+
+
+in your  .bash_profile  (in mac) or .bashrc (in linux), let's make check-mask available for the terminal at any location.
+
+
+```bash
+cd $HOME
+
+# edit your .bash_profile/.bashrc
+# append the following the ${install_dir}/bin to your $PATH
+# $PATH shows the system where to look for binaries
+# include the following line in your .bashrc/.bash_profile/.zshrc
+export $PATH=$PATH:${install_dir}/bin 
+# exit and source the file (use the appropriate one)
+# source .bash_profile
+source .bashrc
+# source .zshrc
+
+
+# check_mask should be available now. try typing
+check_mask --help
+
+# now copy the following files from INPUT
+# ocean_mosaic.nc
+# ocean_topog.nc
+# and include them in a directory of your choice
+path_your_dir=/path/to/your/dir
+
+mkdir $path_your_dir
+cd $path_your_dir
+# copy files to ${path_your_dir}
+# to copy from explorer scp your_user_name@xfer.explorer.northeastern.edu:/path/to/files/{ocean_mosaic.nc,ocean_topog.nc, ocean_hgrid.nc} .
+check_mask --grid_file ocean_mosaic.nc --ocean_topog ocean_topog.nc  --layout 10,10
+
+# you should see a mask_table.24.10x10 file
+# 24 masked cells in a 10x10 grid
+
+# check for more details with check_mask --help
+```
+
+
+
