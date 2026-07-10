@@ -8,8 +8,8 @@
 #SBATCH --constrain=ib,cascadelake
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=12
-dt=1
+njobs=4
+dt=3
 dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
 subscript="mom.sub.clk.x"
@@ -17,6 +17,12 @@ subscript_args="--ntasks=$SLURM_NTASKS"
 logname="NWA25_NEUS"
 
 source $ctrldir/aux/inject.sh
+
+# start date (do not use it for restart purposes)
+y=2005
+m=1
+d=1
+
 
 # ─── Functions ────────────────────────────────────────────────────────────────
 
@@ -51,7 +57,7 @@ archive_outputs() {
     local job=$1
     mv *.nc ./outputs_raw/.
     tar -cvf restarts.$job RESTART/* && mv restarts.$job ./restarts_raw
-    mv RESTART/* INPUT/.
+    mv RESTART/* RESTART_INPUT/.
     tar -cvf logs.tar.$job \
         MOM_parameter_doc.* SIS_parameter_doc.* \
         ${logname}.err ${logname}.out \
