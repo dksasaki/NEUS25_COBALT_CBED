@@ -2,13 +2,14 @@
 #SBATCH -J NWA25_NEUS_bp
 #SBATCH --error=NWA25_NEUS.err
 #SBATCH --output=NWA25_NEUS.out
-#SBATCH --time=4-00:00:00
-#SBATCH --partition=long
+#SBATCH --time=01:00:00
+#SBATCH --partition=sharing
 #SBATCH --mem=32G
 #SBATCH --constrain=ib,cascadelake
+#SBATCH --exclude=d0086
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=4
+njobs=8
 dt=3
 dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
@@ -19,9 +20,9 @@ logname="NWA25_NEUS"
 source $ctrldir/aux/inject.sh
 
 # start date (do not use it for restart purposes)
-y=2005
-m=1
-d=1
+y0=2005
+m0=1
+d0=1
 
 
 # ─── Functions ────────────────────────────────────────────────────────────────
@@ -80,23 +81,28 @@ setup_dirs
 thisjob=$(get_job_number)
 echo "Starting job #$thisjob"
 
+
+# when initailizing the model we set up the date using y,m, and d:
 if [[ $thisjob == 1 ]]; then
-    line=$(grep "current_date" $ctrldir/input.nml | sed "s/,/ /g")
-    sy=$(echo $line | awk '{print $3}')
-    sm=$(echo $line | awk '{print $4}')
-    sd=$(echo $line | awk '{print $5}')
-    echo "$sy $sm $sd" > $ctrldir/run_start_date
+#    line=$(grep "current_date" $ctrldir/input.nml | sed "s/,/ /g")
+    sy=$y0
+    sm=$m0
+    sd=$d0
+    echo "$sy $sm $sd" > $ctrldir/run_start_date # write the dates into this aux file
 fi
 
+# read the dates either from run_start_date or jobscompleted
 read thisyear thismonth thisday <<< $(get_sim_date)
+
+# compute the time segment considering dt_unit and dt
 compute_segment $thisyear $thismonth $thisday
 echo "Sim date: $thisyear-$thismonth-$thisday | Segment: $seg_units $dt_unit"
 
-prepare_nml
-set_run_mode $thisjob
-update_current_date $thisyear $thismonth $thisday
-inject_run_length $run_length
-prepare_input_files $thisyear
+prepare_nml                                              # gets the template
+set_run_mode $thisjob                                    # configures restart key in input.nml
+update_current_date $thisyear $thismonth $thisday        # updates input.nml starting date
+inject_run_length $run_length                            # injects run length in input.nml
+prepare_input_files $thisyear                            # use templates and replace the year in the strings
 
 run_model
 
