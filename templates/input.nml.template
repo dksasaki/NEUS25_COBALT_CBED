@@ -33,7 +33,7 @@
             hours  = 0,
             minutes= 0,
             current_date = 2005,1,1,0,0,0,
-            force_date_from_namelist = .false.,
+            force_date_from_namelist = .true.,
             calendar = 'julian',
             dt_cpld = 1200,
             dt_atmos = 1200,
