@@ -2,15 +2,15 @@
 #SBATCH -J NWA25_NEUS_bp
 #SBATCH --error=NWA25_NEUS.err
 #SBATCH --output=NWA25_NEUS.out
-#SBATCH --time=01:00:00
-#SBATCH --partition=sharing
+#SBATCH --time=01-00:00:00
+#SBATCH --partition=long
 #SBATCH --mem=32G
 #SBATCH --constrain=ib,cascadelake
 #SBATCH --exclude=d0086
-
+#SBATCH --nodes=2-8
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=8
-dt=3
+njobs=12
+dt=2
 dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
 subscript="mom.sub.clk.x"
