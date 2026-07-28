@@ -79,7 +79,9 @@
         debug = .false.
         imbalance_tolerance=1.0e-3
         as_param_cobalt='W92'
-        do_cbed=.true.
+        do_cbed=.false.
+        do_external_source=.true.
+        do_external_sink=.false.
 /
 
  &generic_abiotic_nml
