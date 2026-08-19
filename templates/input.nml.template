@@ -77,10 +77,10 @@
  &generic_COBALT_nml
         co2_calc = 'mocsy'
         debug = .false.
-        imbalance_tolerance=1.0e-3
+        imbalance_tolerance=1.0e-6
         as_param_cobalt='W92'
-        do_cbed=.false.
-        do_external_source=.true.
+        do_cbed=.true.
+        do_external_source=.false.
         do_external_sink=.false.
 /
 

@@ -6,10 +6,12 @@
 #SBATCH --partition=long
 #SBATCH --mem=32G
 #SBATCH --constrain=ib,cascadelake
+#SBATCH --exclusive
+#SBATCH --exclude=d0086,d0057
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=4
-dt=3
+njobs=12
+dt=2
 dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
 subscript="mom.sub.clk.x"
@@ -19,7 +21,7 @@ logname="NWA25_NEUS"
 source $ctrldir/aux/inject.sh
 
 
-y0=2005
+y0=2018
 m0=1
 d0=1
 # ─── Functions ────────────────────────────────────────────────────────────────

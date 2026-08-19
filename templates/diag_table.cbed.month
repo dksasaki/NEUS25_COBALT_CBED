@@ -4,12 +4,12 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 # OBGC/COBALT/CBED DIAG Table (DKS, 2026/01/27)
 #==========================================================================================
 "cobalt_budgets%4yr%2mo",       1, "months",1, "days", "time", 1, "months"
-"cobalt_tracers%4yr%2mo",       5, "days",  1, "days", "time", 1, "months"
+"cobalt_tracers%4yr%2mo",       1, "months",  1, "days", "time", 1, "months"
 "cobalt_limitation%4yr%2mo",    1, "months",1, "days", "time", 1, "months"
-"cobalt_btm%4yr%2mo",           5, "days",  1, "days", "time", 1, "months"
-"sediment_cbed%4yr%2mo",        5, "days",  1, "days", "time", 1, "months"
-"ocean_daily%4yr%2mo",          1, "days",  1, "days", "time", 1, "months"
-"ocean_daily_2d_%4yr%2mo",       1, "hours", 1, "days", "time", 1, "months"
+"cobalt_btm%4yr%2mo",           1, "days",  1, "days", "time", 1, "months"
+"sediment_cbed%4yr%2mo",        1, "days",  1, "days", "time", 1, "months"
+"ocean_daily%4yr%2mo",          1, "months",  1, "days", "time", 1, "months"
+"ocean_daily_2d_%4yr%2mo",      1, "months", 1, "days", "time", 1, "months"
 #===================================================================================
 # STATE VARIABLES (Biomass - mol kg-1)
 #===================================================================================
@@ -167,6 +167,10 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cobalt","fcadet_arag_btm",  "fcadet_arag_btm", "cobalt_btm%4yr%2mo","all","mean","none",2
 "generic_cobalt","fcadet_calc_btm",  "fcadet_calc_btm", "cobalt_btm%4yr%2mo","all","mean","none",2
 "generic_cobalt","fno3denit_sed",    "fno3denit_sed",   "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt", "ndet_kelp_2d", "ndet_kelp_2d"     , "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "jremin_ndet_kelp",   "jremin_ndet_kelp",   "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "jprod_nh4_kelp",     "jprod_nh4_kelp",     "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "fntot_btm",     "fntot_btm",     "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
 #===================
 # Generic COBALT bottom fields:
 #==================
@@ -204,5 +208,8 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cbed", "cbed_dic_flux", "cbed_dic_flux", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_burial_om", "cbed_burial_om", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_denit", "cbed_denit", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
-
+"generic_cbed", "cbed_om1_kelp_conc",  "cbed_om1_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_om2_kelp_conc",  "cbed_om2_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_om3_kelp_conc",  "cbed_om3_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_burial_om_kelp", "cbed_burial_om_kelp", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 
