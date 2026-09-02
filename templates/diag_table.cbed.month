@@ -9,7 +9,7 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "cobalt_btm%4yr%2mo",           1, "days",  1, "days", "time", 1, "months"
 "sediment_cbed%4yr%2mo",        1, "days",  1, "days", "time", 1, "months"
 "ocean_daily%4yr%2mo",          1, "months",  1, "days", "time", 1, "months"
-"ocean_daily_2d_%4yr%2mo",      1, "months", 1, "days", "time", 1, "months"
+"ocean_daily2d_%4yr%2mo",      1, "months", 1, "days", "time", 1, "months"
 #===================================================================================
 # STATE VARIABLES (Biomass - mol kg-1)
 #===================================================================================
@@ -174,13 +174,13 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 #===================
 # Generic COBALT bottom fields:
 #==================
-"ocean_model",   "ssh",          "ssh",     "ocean_daily_2d_%4yr%2mo"        "all", "mean", "none",2
+"ocean_model",   "ssh",          "ssh",     "ocean_daily2d_%4yr%2mo"        "all", "mean", "none",2
 "ocean_model",   "ssh",          "ssh",           "ocean_daily%4yr%2mo",         "all", "mean",  "none",2
-"ocean_model",   "tos",          "tos",     "ocean_daily_2d_%4yr%2mo"       "all", "mean", "none",2
+"ocean_model",   "tos",          "tos",     "ocean_daily2d_%4yr%2mo"       "all", "mean", "none",2
 "ocean_model",   "tossq",        "tossq",   "ocean_daily%4yr%2mo",         "all", "mean", "none",2
-"ocean_model",   "tob",          "tob",     "ocean_daily_2d_%4yr%2mo"        "all", "mean", "none",2
-"ocean_model",   "sos",          "sos",     "ocean_daily_2d_%4yr%2mo",         "all", "mean", "none",2
-"ocean_model",   "sob",          "sob",     "ocean_daily_2d_%4yr%2mo",         "all", "mean", "none",2
+"ocean_model",   "tob",          "tob",     "ocean_daily2d_%4yr%2mo"        "all", "mean", "none",2
+"ocean_model",   "sos",          "sos",     "ocean_daily2d_%4yr%2mo",         "all", "mean", "none",2
+"ocean_model",   "sob",          "sob",     "ocean_daily2d_%4yr%2mo",         "all", "mean", "none",2
 "ocean_model",   "u",          "u",     "ocean_daily%4yr%2mo",         "all", "mean", "none",2
 "ocean_model",   "v",          "v",     "ocean_daily%4yr%2mo",         "all", "mean", "none",2
 "ocean_model",   "temp",       "temp",     "ocean_daily%4yr%2mo",         "all", "mean", "none",2
@@ -208,6 +208,10 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cbed", "cbed_dic_flux", "cbed_dic_flux", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_burial_om", "cbed_burial_om", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_denit", "cbed_denit", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_svf", "cbed_svf", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_por", "cbed_por", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_z_cbed_mid", "cbed_z_cbed_mid", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+"generic_cbed", "cbed_dz_cbed", "cbed_dz_cbed", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om1_kelp_conc",  "cbed_om1_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om2_kelp_conc",  "cbed_om2_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om3_kelp_conc",  "cbed_om3_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
