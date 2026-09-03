@@ -7,7 +7,7 @@
 #SBATCH --mem=32G
 #SBATCH --constrain=ib,cascadelake
 #SBATCH --exclusive
-#SBATCH --exclude=d0086,d0057
+#SBATCH --exclude=d0086,d0057,d0054
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 njobs=12
@@ -17,6 +17,12 @@ ctrldir=${PWD}
 subscript="mom.sub.clk.x"
 subscript_args="--ntasks=$SLURM_NTASKS"
 logname="NWA25_NEUS"
+
+# ─── Storage ──────────────────────────────────────────────────────────────────
+# handled by aux/store.sh, submitted as a separate job after each segment
+do_store=1          # 1 = compress outputs and copy them to storage_dir, 0 = off
+storage_dir="/home/d.sasaki/schultz/d.sasaki/experiments/v1.0_simulation/202606_sobolm/20260622_cbed"
+ncompress=12        # parallel gzip processes
 
 source $ctrldir/aux/inject.sh
 
@@ -66,6 +72,15 @@ archive_outputs() {
     mv logs.tar.$job ./logs/.
 }
 
+submit_store() {
+    # hand the compression and the transfer to its own short job, so that
+    # neither eats into this allocation's wall time
+    local job=$1 year=$2 yearend=$3
+    cd $ctrldir && sbatch \
+        --export=ALL,ctrldir="$ctrldir",storage_dir="$storage_dir",ncompress="$ncompress" \
+        ./aux/store.sh $job $year $yearend
+}
+
 resubmit() {
     cd $ctrldir && sbatch $subscript_args ./$subscript
 }
@@ -110,11 +125,18 @@ case $status in
         read nextyear nextmonth nextday <<< $(advance_sim_date $thisyear $thismonth $thisday)
         echo "$thisjob $thisyear $thismonth $thisday $nextyear $nextmonth $nextday" >> $ctrldir/jobscompleted
 
-
 	if (( thisjob < njobs )); then
             resubmit
         else
             echo "This is the last job."
+        fi
+
+        if (( do_store == 1 )); then
+            # segments are capped at the year end, so month=1 day=1 means
+            # RESTART holds the restart that starts year $nextyear
+            yearend=0
+            (( nextmonth == 1 )) && (( nextday == 1 )) && yearend=1
+            submit_store $thisjob $nextyear $yearend
         fi
         ;;
     mpi_failure)
@@ -126,3 +148,4 @@ case $status in
         exit 1
         ;;
 esac
+
