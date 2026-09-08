@@ -20,8 +20,8 @@ logname="NWA25_NEUS"
 
 # ─── Storage ──────────────────────────────────────────────────────────────────
 # handled by aux/store.sh, submitted as a separate job after each segment
-do_store=1          # 1 = compress outputs and copy them to storage_dir, 0 = off
-storage_dir="/home/d.sasaki/schultz/d.sasaki/experiments/v1.0_simulation/202606_sobolm/20260622_cbed"
+do_store=0          # 1 = compress outputs and copy them to storage_dir, 0 = off
+storage_dir="/path/to/storage"
 ncompress=12        # parallel gzip processes
 
 source $ctrldir/aux/inject.sh
@@ -95,7 +95,14 @@ setup_dirs
 thisjob=$(get_job_number)
 echo "Starting job #$thisjob"
 
+cd INPUT
+ln -sf ../RESTART_INPUT/generic_CBED.res.nc
+cd ..
+
 if [[ $thisjob == 1 ]]; then
+    cd INPUT
+    ln -sf cbed_init.nc generic_CBED.res.nc
+    cd ..
     sy=$y0
     sm=$m0
     sd=$d0
