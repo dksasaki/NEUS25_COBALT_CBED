@@ -3,9 +3,9 @@ CEFI_NEUS25_COBALT_CBED_V0.0
 #=============================================================================================================================
 # OBGC/COBALT/CBED DIAG Table (DKS, 2026/01/27)
 #==========================================================================================
-"cobalt_budgets%4yr%2mo",       2, "days",1, "days", "time", 1, "months"
-"cobalt_tracers%4yr%2mo",       2, "days",  1, "days", "time", 1, "months"
-"cobalt_limitation%4yr%2mo",    2, "days",1, "days", "time", 1, "months"
+"cobalt_budgets%4yr%2mo",       1, "months",1, "days", "time", 1, "months"
+"cobalt_tracers%4yr%2mo",       1, "months",  1, "days", "time", 1, "months"
+"cobalt_limitation%4yr%2mo",    1, "months",1, "days", "time", 1, "months"
 "cobalt_btm%4yr%2mo",           1, "days",  1, "days", "time", 1, "months"
 "sediment_cbed%4yr%2mo",        1, "days",  1, "days", "time", 1, "months"
 "ocean_daily%4yr%2mo",          1, "days",  1, "days", "time", 1, "months"
