@@ -180,3 +180,6 @@ DT_OBC_SEG_UPDATE_OBGC = 3600
 #override PHA_MLD_CALC = True
 #override PHA_MLD_USE_DELTA_RHO = True
 #override RESTART_CHECKSUMS_REQUIRED = False
+
+
+#override TS_FILE = "glorys_ic_2018-01-01.nc"
