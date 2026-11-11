@@ -1,15 +1,15 @@
-CEFI_NEUS25_COBALT_CBED_V0.1
+CEFI_NEUS25_COBALT_CBED_V0.0
 1993 1 1 0 0 0
 #=============================================================================================================================
 # OBGC/COBALT/CBED DIAG Table (DKS, 2026/01/27)
 #==========================================================================================
-"cobalt_budgets%4yr%2mo",       1, "months",1, "days", "time", 1, "months"
-"cobalt_tracers%4yr%2mo",       1, "months",  1, "days", "time", 1, "months"
-"cobalt_limitation%4yr%2mo",    1, "months",1, "days", "time", 1, "months"
+"cobalt_budgets%4yr%2mo",       2, "days",1, "days", "time", 1, "months"
+"cobalt_tracers%4yr%2mo",       2, "days",  1, "days", "time", 1, "months"
+"cobalt_limitation%4yr%2mo",    2, "days",1, "days", "time", 1, "months"
 "cobalt_btm%4yr%2mo",           1, "days",  1, "days", "time", 1, "months"
 "sediment_cbed%4yr%2mo",        1, "days",  1, "days", "time", 1, "months"
-"ocean_daily%4yr%2mo",          1, "months",  1, "days", "time", 1, "months"
-"ocean_daily2d_%4yr%2mo",      1, "months", 1, "days", "time", 1, "months"
+"ocean_daily%4yr%2mo",          1, "days",  1, "days", "time", 1, "months"
+"ocean_daily2d_%4yr%2mo",       1, "hours", 1, "days", "time", 1, "months"
 #===================================================================================
 # STATE VARIABLES (Biomass - mol kg-1)
 #===================================================================================
@@ -31,7 +31,6 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cobalt_z","psm",       "psm",      "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","silg",      "silg",     "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","simd",      "simd",     "cobalt_tracers%4yr%2mo","all","mean","none",2
-"generic_cobalt_z","chl",    "chl",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Lg",    "chl_Lg",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Md",    "chl_Md",   "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","chl_Sm",    "chl_Sm",   "cobalt_tracers%4yr%2mo","all","mean","none",2
@@ -46,7 +45,6 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cobalt_z","talk",      "talk",     "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","si",        "si",       "cobalt_tracers%4yr%2mo","all","mean","none",2
 "generic_cobalt_z","co3",       "co3",      "cobalt_tracers%4yr%2mo","all","mean","none",2
-"generic_cobalt_z","no3",        "no3",       "cobalt_tracers%4yr%2mo","all","mean","none",2
 #===================================================================================
 # PRODUCTION TERMS (mol kg-1 s-1)
 #===================================================================================
@@ -152,25 +150,32 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 #===================
 # Generic COBALT bottom fields:
 #==================
-"generic_cobalt","btm_temp",         "btm_temp",        "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","btm_salt",         "btm_salt",        "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","btm_o2",           "btm_o2",          "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","ffedet_btm",       "ffedet_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","btm_no3",       "btm_no3",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","btm_alk",       "btm_alk",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","o2_btf",       "o2_btf",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","btm_dic",       "btm_dic",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","flithdet_btm",     "flithdet_btm",    "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fndet_btm",        "fndet_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fpdet_btm",        "fpdet_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fsidet_btm",       "fsidet_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fcadet_arag_btm",  "fcadet_arag_btm", "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fcadet_calc_btm",  "fcadet_calc_btm", "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt","fno3denit_sed",    "fno3denit_sed",   "cobalt_btm%4yr%2mo","all","mean","none",2
-"generic_cobalt", "ndet_kelp_2d", "ndet_kelp_2d"     , "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
-"generic_cobalt", "jremin_ndet_kelp",   "jremin_ndet_kelp",   "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
-"generic_cobalt", "jprod_nh4_kelp",     "jprod_nh4_kelp",     "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
-"generic_cobalt", "fntot_btm",     "fntot_btm",     "cobalt_btm%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt","btm_o2",           "btm_o2",         "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","btm_no3",          "btm_no3",        "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","btm_nh4",          "btm_nh4",        "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","btm_dic",          "btm_dic",        "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","btm_alk",          "btm_alk",        "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fndet_btm",        "fndet_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","flithdet_btm",     "flithdet_btm",   "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fndi_btm",         "fndi_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fnlg_btm",         "fnlg_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fnmd_btm",         "fnmd_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fnsm_btm",         "fnsm_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fsimd_btm",        "fsimd_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fsilg_btm",        "fsilg_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","ffedet_btm",       "ffedet_btm",     "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","ffedi_btm",        "ffedi_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","ffesm_btm",        "ffesm_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","ffemd_btm",        "ffemd_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","ffelg_btm",        "ffelg_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fcadet_arag_btm",  "fcadet_arag_btm","cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fcadet_calc_btm",  "fcadet_calc_btm","cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fsidet_btm",       "fsidet_btm",     "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fpdet_btm",        "fpdet_btm",      "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fpdi_btm",         "fpdi_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fpsm_btm",         "fpsm_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fpmd_btm",         "fpmd_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
+"generic_cobalt","fplg_btm",         "fplg_btm",       "cobalt_btm%4yr%2mo","all","mean","none",2
 #===================
 # Generic COBALT bottom fields:
 #==================
@@ -208,12 +213,9 @@ CEFI_NEUS25_COBALT_CBED_V0.1
 "generic_cbed", "cbed_dic_flux", "cbed_dic_flux", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_burial_om", "cbed_burial_om", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_denit", "cbed_denit", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
-"generic_cbed", "cbed_svf", "cbed_svf", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
-"generic_cbed", "cbed_por", "cbed_por", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
-"generic_cbed", "cbed_z_cbed_mid", "cbed_z_cbed_mid", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
-"generic_cbed", "cbed_dz_cbed", "cbed_dz_cbed", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om1_kelp_conc",  "cbed_om1_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om2_kelp_conc",  "cbed_om2_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om3_kelp_conc",  "cbed_om3_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_burial_om_kelp", "cbed_burial_om_kelp", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+
 

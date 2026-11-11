@@ -1,6 +1,7 @@
 **.out
 **err
 **nc
+**nc.**
 **.all
 **.layout
 **debugging
@@ -8,3 +9,4 @@
 **status
 jobscompleted
 run_start_date
+mom6
