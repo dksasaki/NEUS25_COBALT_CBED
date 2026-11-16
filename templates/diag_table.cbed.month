@@ -10,6 +10,7 @@ CEFI_NEUS25_COBALT_CBED_V0.0
 "sediment_cbed%4yr%2mo",        1, "days",  1, "days", "time", 1, "months"
 "ocean_daily%4yr%2mo",          1, "days",  1, "days", "time", 1, "months"
 "ocean_daily2d_%4yr%2mo",       1, "hours", 1, "days", "time", 1, "months"
+"fish_models_%4yr%2mo",         1, "months",1, "days", "time", 1, "months"
 #===================================================================================
 # STATE VARIABLES (Biomass - mol kg-1)
 #===================================================================================
@@ -219,5 +220,21 @@ CEFI_NEUS25_COBALT_CBED_V0.0
 "generic_cbed", "cbed_om2_kelp_conc",  "cbed_om2_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_om3_kelp_conc",  "cbed_om3_kelp_conc",  "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
 "generic_cbed", "cbed_burial_om_kelp", "cbed_burial_om_kelp", "sediment_cbed%4yr%2mo", "all", "mean", "none", 2
+#===================
+# FISH MODELS (monthly means)
+#===================
+# Physics
+"ocean_model",    "SST",              "SST",              "fish_models_%4yr%2mo", "all", "mean", "none", 2
+"ocean_model",    "temp",             "thetao",           "fish_models_%4yr%2mo", "all", "mean", "none", 2
+"ocean_model",    "tob",              "tob",              "fish_models_%4yr%2mo", "all", "mean", "none", 2
+# NPP, full water column (mol N m-2 s-1)
+"generic_cobalt", "wc_vert_int_npp",  "wc_vert_int_npp",  "fish_models_%4yr%2mo", "all", "mean", "none", 2
+# Zooplankton, top 100 m (nmdz/nlgz mol N m-2; jhploss mol N m-2 s-1)
+"generic_cobalt", "nmdz_100",         "nmdz_100",         "fish_models_%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "nlgz_100",         "nlgz_100",         "fish_models_%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "jhploss_nmdz_100", "jhploss_nmdz_100", "fish_models_%4yr%2mo", "all", "mean", "none", 2
+"generic_cobalt", "jhploss_nlgz_100", "jhploss_nlgz_100", "fish_models_%4yr%2mo", "all", "mean", "none", 2
+# Total N sinking flux to seafloor (mol N m-2 s-1)
+"generic_cobalt", "fntot_btm",        "fntot_btm",        "fish_models_%4yr%2mo", "all", "mean", "none", 2
 
 
