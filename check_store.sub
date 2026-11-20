@@ -1,0 +1,131 @@
+#!/bin/bash
+#SBATCH -J storecheck
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=08:00:00
+#SBATCH --partition=short
+#SBATCH --output=logs/storecheck_%j.out
+
+# check_store.sub — job script that checks the storage of this experiment and,
+# if the check finds problems, repairs what it can and checks again.
+# The checks are in aux/check_store.sh, whose header describes the levels, the
+# expected folders and the output files.
+#
+# Submit it from the control directory, which is the folder holding this file:
+#
+#   sbatch check_store.sub [level]
+#
+# The level is size, gzip or cmp. It is the first argument if there is one, else
+# check_level below. "size" takes seconds; "gzip" and "cmp" read every stored
+# archive, which takes hours. For "size" a small job is enough:
+#
+#   sbatch --time=00:10:00 --cpus-per-task=1 check_store.sub size
+#
+# Do not submit it while a store job is running: the archives being copied are
+# not complete yet. Wait for the store job to end, or submit it with
+#   sbatch --dependency=afterany:<store job id> check_store.sub
+#
+# storage_dir is the one in mom.sub.clk.x (see the header of aux/check_store.sh
+# for the format of that line); to use another folder, submit with
+#   sbatch --export=ALL,storage_dir=/path/to/storage check_store.sub
+#
+# Steps:
+#   1. check storage (aux/check_store.sh). If there is no problem the job ends here.
+#   2. repair, if repair=1: every archive of output/ that the check listed as
+#      MISSING, SIZE_MISMATCH, TRAILER_MISMATCH, BAD_GZIP or DIFFERS_FROM_ORIGINAL
+#      is copied again (once, even if listed for several problems) from
+#      outputs_raw/gz, but only if that local archive passes gzip -t. rsync
+#      --checksum compares contents, not sizes, and writes a temporary file that
+#      replaces the stored one only when complete. Nothing is deleted. If the local
+#      archive is the faulty one, as TRAILER_MISMATCH can mean, copying it changes
+#      nothing and the problem stays in the report. The restarts and NO_ARCHIVE
+#      are not repaired and stay in the report too.
+#   3. check storage again, at the same level. The job ends as COMPLETED if that
+#      second check finds no problem, else as FAILED.
+#
+# The problems of the first check are kept in logs/storecheck_<jobid>.problems.first,
+# those of the last check are in logs/storecheck_<jobid>.problems, and storechecked
+# gets one line per check.
+
+# ─── Configuration ────────────────────────────────────────────────────────────
+check_level="gzip"  # size | gzip | cmp
+check_restarts=0    # 1 = also expect every year-end restart in storage
+repair=1            # 1 = copy again what the first check found wrong, then check again
+ncompress=12        # parallel processes; keep it at or below --cpus-per-task
+
+ctrldir=${PWD}
+level=${1:-$check_level}
+problems="logs/storecheck_${SLURM_JOB_ID:-local}.problems"
+
+export ctrldir ncompress check_restarts
+
+# ─── Functions ────────────────────────────────────────────────────────────────
+
+repair_storage() {
+    # copy again the local archive of every output file that the first check
+    # listed, if that archive is good
+    local dest="$storage_dir/output"
+    local type path rest b
+    local todo=()
+    declare -A seen     # a file can be listed for several problems; copy it once
+
+    while read -r type path rest; do
+        case $type in
+            MISSING|SIZE_MISMATCH|TRAILER_MISMATCH|BAD_GZIP|DIFFERS_FROM_ORIGINAL) ;;
+            *) continue ;;
+        esac
+        [[ $path == "$dest"/* ]] || continue
+        b=$(basename "$path")
+        [[ -z ${seen[$b]:-} ]] || continue
+        seen[$b]=1
+        if [ -f "outputs_raw/gz/$b" ]; then
+            todo+=("outputs_raw/gz/$b")
+        else
+            echo "REPAIR: no local archive for $b, not repaired"
+        fi
+    done < "$problems.first"
+
+    if (( ${#todo[@]} == 0 )); then
+        echo "REPAIR: nothing to copy again."
+        return
+    fi
+
+    echo "REPAIR: copying ${#todo[@]} archives again to $dest with $ncompress parallel processes..."
+    printf '%s\0' "${todo[@]}" \
+        | xargs -0 -r -P $ncompress -n 1 sh -c '
+            dest=$1; gz=$2
+            if gzip -t "$gz" 2>/dev/null; then
+                if rsync -a --checksum -- "$gz" "$dest/"; then
+                    echo "REPAIR: copied $gz"
+                else
+                    echo "REPAIR: rsync failed for $gz"
+                fi
+            else
+                echo "REPAIR: local archive $gz is also bad, not copied"
+            fi' sh "$dest"
+}
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
+
+# storage_dir is needed here too, to know where the repair writes; it is found the
+# same way as in aux/check_store.sh
+if [[ -z ${storage_dir:-} ]]; then
+    storage_dir=$(sed -n 's/^storage_dir="\([^"]*\)".*/\1/p' "$ctrldir/mom.sub.clk.x")
+fi
+: "${storage_dir:?storage_dir is not set, and not found in mom.sub.clk.x}"
+export storage_dir
+
+bash $ctrldir/aux/check_store.sh $level
+rc=$?
+
+if (( rc != 0 && repair == 1 )); then
+    cp "$problems" "$problems.first"
+    echo "REPAIR: the check found problems, repairing (the list is in $problems.first)"
+    repair_storage
+    echo "REPAIR: checking again"
+    bash $ctrldir/aux/check_store.sh $level
+    rc=$?
+fi
+
+exit $rc
