@@ -10,7 +10,7 @@
 #SBATCH --exclude=d0086,d0057,d0054
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-njobs=12
+njobs=24
 dt=2
 dt_unit="months"   # "days" or "months"
 ctrldir=${PWD}
@@ -20,8 +20,8 @@ logname="NWA25_NEUS"
 
 # ─── Storage ──────────────────────────────────────────────────────────────────
 # handled by aux/store.sh, submitted as a separate job after each segment
-do_store=0          # 1 = compress outputs and copy them to storage_dir, 0 = off
-storage_dir="/path/to/storage"
+do_store=1          # 1 = compress outputs and copy them to storage_dir, 0 = off
+storage_dir="/home/d.sasaki/schultz/d.sasaki/experiments/v1.0_simulation/202611_nocbed_initial"
 ncompress=12        # parallel gzip processes
 
 source $ctrldir/aux/inject.sh
